@@ -1,0 +1,1 @@
+[![open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Egor200313/optimization/blob/master/one_dim/fibonacci_method.ipynb)
