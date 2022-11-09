@@ -19,7 +19,6 @@ def optimize_one_dim(left_border: float, right_border: float, tolerance: float, 
             return L
         middle1 = (R - L) * fibonacci[max_iter - k - 1] / fibonacci[max_iter - k + 1] + L
         middle2 = (R - L) * fibonacci[max_iter - k] / fibonacci[max_iter - k + 1] + L
-        print(middle1, middle2, target_function(middle1), target_function(middle2))
         if target_function(middle1) > target_function(middle2):
             L = middle1
         else:
