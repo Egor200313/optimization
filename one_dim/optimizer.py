@@ -20,13 +20,28 @@ def optimize_one_dim(left_border: float,
                      ) -> dict:
     """
     optimizes one dimensional function using Fibonacci method
-    :param left_border: left border of optimization interval
-    :param right_border: right border of optimization interval
-    :param tolerance: possible mistake as maximal result interval length
-    :param max_iter: maximal number of iterations
-    :param target_function: target function to optimize, must be one dimensional
-    :param derivative: derivative of target function
-    :return: result of optimization
+
+    Parameters:
+        left_border: float
+            left border of optimization interval
+
+        right_border: float
+            right border of optimization interval
+
+        tolerance: float
+            possible mistake as maximal result interval length
+
+        max_iter: int
+            maximal number of iterations
+
+        target_function: func
+            target function to optimize, must be one dimensional
+
+        derivative: func
+            derivative of target function
+
+    Returns:
+        result of optimization
     """
 
     fibonacci = calculate_fib_sequence(max_iter)
