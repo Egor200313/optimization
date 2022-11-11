@@ -6,8 +6,8 @@ def f(x):
 
 
 def main():
-    point = optimize_one_dim(-10.0, 9.0, 1e-10, 100, f)
-    print(point)
+    point = optimize_one_dim(-10.0, 9.0, 1e-12, 100, f)
+    print(point['iterations'])
 
 
 if __name__ == "__main__":
