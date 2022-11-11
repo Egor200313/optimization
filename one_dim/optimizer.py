@@ -1,22 +1,5 @@
 import numpy as np
-from typing import Callable, TypedDict
-
-
-class Result(TypedDict):
-    """
-    point: float
-        middle of result interval
-    tolerance: float
-        length of result interval
-    iterations: int
-        number of loop iterations
-    comp: int
-        number of target function computations
-    """
-    point: float
-    tolerance: float
-    iterations: int
-    comp: int
+from typing import Callable
 
 
 def calculate_fib_sequence(n: int) -> np.array:
@@ -34,7 +17,7 @@ def optimize_one_dim(left_border: float,
                      max_iter: int,
                      target_function: Callable,
                      derivative: Callable = None
-                     ) -> Result:
+                     ) -> dict:
     """
     optimizes one dimensional function using Fibonacci method
     :param left_border: left border of optimization interval
