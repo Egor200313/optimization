@@ -6,7 +6,7 @@ def f(x):
 
 
 def main():
-    point = optimize_one_dim(-10.0, 9.0, 0.00000001, 100, f)
+    point = optimize_one_dim(-10.0, 9.0, 1e-10, 100, f)
     print(point)
 
 
