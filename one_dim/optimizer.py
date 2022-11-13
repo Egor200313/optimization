@@ -11,6 +11,11 @@ def calculate_fib_sequence(n: int) -> np.array:
     return sequence
 
 
+def fibonacci(n: int) -> int:
+    phi = (1 + np.sqrt(5)) / 2
+    return int((phi**n - (-phi)**(-n))/(2*phi - 1))
+
+
 def optimize_one_dim(left_border: float,
                      right_border: float,
                      tolerance: float,
@@ -44,7 +49,6 @@ def optimize_one_dim(left_border: float,
         result of optimization
     """
 
-    fibonacci = calculate_fib_sequence(max_iter)
     L, R = left_border, right_border
     for k in np.arange(1, max_iter + 1):
         if R - L <= tolerance:
@@ -54,8 +58,8 @@ def optimize_one_dim(left_border: float,
                     'iterations': k,
                     'comp': (k - 1) * 2
                     }
-        middle1 = (R - L) * fibonacci[max_iter - k - 1] / fibonacci[max_iter - k + 1] + L
-        middle2 = (R - L) * fibonacci[max_iter - k] / fibonacci[max_iter - k + 1] + L
+        middle1 = (R - L) * fibonacci(max_iter - k - 1) / fibonacci(max_iter - k + 1) + L
+        middle2 = (R - L) * fibonacci(max_iter - k) / fibonacci(max_iter - k + 1) + L
         if target_function(middle1) > target_function(middle2):
             L = middle1
         else:
