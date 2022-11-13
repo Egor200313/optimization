@@ -11,9 +11,9 @@ def calculate_fib_sequence(n: int) -> np.array:
     return sequence
 
 
-def fibonacci(n: int) -> int:
+def fibonacci(n: int) -> float:
     phi = (1 + np.sqrt(5)) / 2
-    return int((phi**n - (-phi)**(-n))/(2*phi - 1))
+    return (phi**n - (-phi)**(-n))/(2*phi - 1)
 
 
 def optimize_one_dim(left_border: float,
