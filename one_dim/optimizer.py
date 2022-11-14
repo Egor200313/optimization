@@ -16,6 +16,17 @@ def fibonacci(n: int) -> float:
     return (phi**n - (-phi)**(-n))/(2*phi - 1)
 
 
+def estimate_steps(int_len: float, tolerance: float) -> int:
+    L, R = 0, 1000
+    while R - L > 1:
+        m = int((L + R)/2)
+        if fibonacci(m) < int_len / tolerance:
+            L = m
+        else:
+            R = m
+    return R + 1
+
+
 def optimize_one_dim(left_border: float,
                      right_border: float,
                      tolerance: float,
@@ -48,9 +59,10 @@ def optimize_one_dim(left_border: float,
     Returns:
         result of optimization
     """
-
     L, R = left_border, right_border
-    for k in np.arange(1, max_iter + 1):
+    N = estimate_steps(R - L, tolerance)
+
+    for k in np.arange(1, N + 1):
         if R - L <= tolerance:
             return {
                     'point': round((R + L) / 2, 6),
@@ -58,8 +70,15 @@ def optimize_one_dim(left_border: float,
                     'iterations': k,
                     'comp': (k - 1) * 2
                     }
-        middle1 = (R - L) * fibonacci(max_iter - k - 1) / fibonacci(max_iter - k + 1) + L
-        middle2 = (R - L) * fibonacci(max_iter - k) / fibonacci(max_iter - k + 1) + L
+        if k > max_iter:
+            return {
+                'point': round((R + L) / 2, 6),
+                'tolerance': R - L,
+                'iterations': k,
+                'comp': (k - 1) * 2
+            }
+        middle1 = (R - L) * fibonacci(N - k - 1) / fibonacci(N - k + 1) + L
+        middle2 = (R - L) * fibonacci(N - k) / fibonacci(N - k + 1) + L
         if target_function(middle1) > target_function(middle2):
             L = middle1
         else:
