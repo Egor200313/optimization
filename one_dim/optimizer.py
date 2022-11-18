@@ -3,28 +3,28 @@ from typing import Callable
 
 
 def calculate_fib_sequence(n: int) -> np.array:
-    sequence = np.zeros(n+1)
+    sequence = np.zeros(n + 1)
     sequence[0] = 1
     sequence[1] = 1
     for i in np.arange(2, n + 1):
-        sequence[i] = sequence[i-1] + sequence[i-2]
+        sequence[i] = sequence[i - 1] + sequence[i - 2]
     return sequence
 
 
 def fibonacci(n: int) -> float:
     phi = (1 + np.sqrt(5)) / 2
-    return (phi**n - (-phi)**(-n))/(2*phi - 1)
+    return (phi ** n - (-phi) ** (-n)) / (2 * phi - 1)
 
 
 def estimate_steps(int_len: float, tolerance: float) -> int:
-    L, R = 0, 1000
-    while R - L > 1:
-        m = int((L + R)/2)
+    l, r = 0, 1000
+    while r - l > 1:
+        m = int((l + r) / 2)
         if fibonacci(m) < int_len / tolerance:
-            L = m
+            l = m
         else:
-            R = m
-    return R + 1
+            r = m
+    return r + 1
 
 
 def optimize_one_dim(left_border: float,
@@ -65,11 +65,11 @@ def optimize_one_dim(left_border: float,
     for k in np.arange(1, N + 1):
         if R - L <= tolerance:
             return {
-                    'point': round((R + L) / 2, 6),
-                    'tolerance': R - L,
-                    'iterations': k,
-                    'comp': (k - 1) * 2
-                    }
+                'point': round((R + L) / 2, 6),
+                'tolerance': R - L,
+                'iterations': k,
+                'comp': (k - 1) * 2
+            }
         if k > max_iter:
             return {
                 'point': round((R + L) / 2, 6),
@@ -84,8 +84,8 @@ def optimize_one_dim(left_border: float,
         else:
             R = middle2
     return {
-            'point': round((R + L) / 2, 6),
-            'tolerance': R - L,
-            'iterations': max_iter,
-            'comp': max_iter * 2
-            }
+        'point': round((R + L) / 2, 6),
+        'tolerance': R - L,
+        'iterations': N,
+        'comp': N * 2
+    }
