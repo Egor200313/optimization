@@ -27,7 +27,8 @@ def gradient_descent(target_function: Callable,
 		     derivative: Callable,
 		     dim: int,
 		     tolerance: float,
-		     max_iter: int) -> dict:
+		     max_iter: int,
+		     termination_criterion = "cauchy") -> dict:
     x_cur = np.ones(dim)
     d_cur = -derivative(x_cur)
     
@@ -36,7 +37,21 @@ def gradient_descent(target_function: Callable,
     	x_next = x_cur + d_cur
     	d_next = -derivative(x_next)
     	
+    	if termination_criterion == "cauchy":
+    	    if abs(target_function(x_cur) - target_function(x_next)) < tolerance:
+    	    	x_cur = x_next
+    	    	break
+    	elif termination_criterion == "cauchy_x":
+    	    if sqrt((x_cur - x_next) @ (x_cur - x_next).T) < tolerance:
+    	        x_cur = x_next
+    	        break
+    	else: # termination_criterion == "zero_gradient"
+    	    if sqrt(derivative(x_next).T @ derivative(x_next)) < tolerance:
+    	    	x_cur = x_next
+    	    	break
+    	
     	x_cur, d_cur = x_next, d_next
+    	i += 1
     	
     return {'point': x_cur}
     
@@ -44,7 +59,8 @@ def hestens_stiefel(target_function: Callable,
 		    derivative: Callable,
 		    dim: int,
 		    tolerance: float,
-		    max_iter: int) -> dict:
+		    max_iter: int,
+		    termination_criterion = "cauchy") -> dict:
     x_cur = np.ones(dim)
     d_cur = -derivative(x_cur)
     
@@ -56,6 +72,21 @@ def hestens_stiefel(target_function: Callable,
     	       / (d_cur @ (derivative(x_next) - derivative(x_cur)).T)
     	d_next = -derivative(x_next) + coef * d_cur
     	
+    	if termination_criterion == "cauchy":
+    	    if abs(target_function(x_cur) - target_function(x_next)) < tolerance:
+    	    	x_cur = x_next
+    	    	break
+    	elif termination_criterion == "cauchy_x":
+    	    if sqrt((x_cur - x_next) @ (x_cur - x_next).T) < tolerance:
+    	        x_cur = x_next
+    	        break
+    	else: # termination_criterion == "zero_gradient"
+    	    if sqrt(derivative(x_next).T @ derivative(x_next)) < tolerance:
+    	    	x_cur = x_next
+    	    	break
+    	
     	x_cur, d_cur = x_next, d_next
+    	i += 1
+    	
     return {'point': x_cur}
 
