@@ -22,3 +22,40 @@ def optimize_hs(tolerance: float,
 
         x_cur, d_cur = x_next, d_next
     return {'point': x_cur}
+    
+def gradient_descent(target_function: Callable,
+		     derivative: Callable,
+		     dim: int,
+		     tolerance: float,
+		     max_iter: int) -> dict:
+    x_cur = np.ones(dim)
+    d_cur = -derivative(x_cur)
+    
+    i = 0
+    while i < max_iter:
+    	x_next = x_cur + d_cur
+    	d_next = -derivative(x_next)
+    	
+    	x_cur, d_cur = x_next, d_next
+    	
+    return {'point': x_cur}
+    
+def hestens_stiefel(target_function: Callable,
+		    derivative: Callable,
+		    dim: int,
+		    tolerance: float,
+		    max_iter: int) -> dict:
+    x_cur = np.ones(dim)
+    d_cur = -derivative(x_cur)
+    
+    i = 0
+    while i < max_iter:
+    	x_next = x_cur + d_cur
+    	
+    	coef = (derivative(x_next).T @ (derivative(x_next) - derivative(x_cur)))\
+    	       / (d_cur @ (derivative(x_next) - derivative(x_cur)).T)
+    	d_next = -derivative(x_next) + coef * d_cur
+    	
+    	x_cur, d_cur = x_next, d_next
+    return {'point': x_cur}
+
